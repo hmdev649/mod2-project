@@ -130,3 +130,6 @@ dmypy.json
 
 #csv files to ignore
 data/*.csv
+
+# DS_Store
+*/.DS_Store
