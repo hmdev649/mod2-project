@@ -129,4 +129,7 @@ dmypy.json
 .pyre/
 
 #csv files to ignore
-data/*.csv
+src/data/*.csv
+
+# DS_Store
+*/.DS_Store
