@@ -1,0 +1,4 @@
+- Lookup.doc contains instructions on how to use the lookup table to locate possible values for categorical variables in the other tables
+- Parcel.doc contains detailed information on the columns specific to parcels of land, e.g. easement rights, quality of land, views, etc
+- Real Property Sales.doc contains detailed information on the sales of various properties, e.g. sale price, sale date, address, etc
+- Residential Building.doc contains information on the type of apartment building, amenities, etc
