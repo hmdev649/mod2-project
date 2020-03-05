@@ -1,21 +1,26 @@
 def create_df(df_sales, df_res, df_parcel):
     '''
-    <function description>
+    This function takes in the three dataset files from the King County assessor website, 
+    merges them on the combination of the Major-Minor columns, and returns the merged
+    dataframe.
     '''
     
-    # Create 'MajorMinor' columns in df_sales
+    import pandas as pd
+    import pandasql as ps
+    pd.set_option('max_colwidth', 80)
+
+    # Create 'MajorMinor' and 'year' columns in df_sales
+    df_sales['year'] = pd.DatetimeIndex(df_sales['DocumentDate']).year
     df_sales['Major'] = df_sales['Major'].astype(str)
     df_sales['Minor'] = df_sales['Minor'].astype(str)
     df_sales['MajorMinor'] = df_sales['Major'] + '-' + df_sales['Minor']
-
+    
     # Create'MajorMinor' columns in df_res
-
     df_res['Major'] = df_res['Major'].astype(str)
     df_res['Minor'] = df_res['Minor'].astype(str)
     df_res['MajorMinor'] = df_res['Major'] + '-' + df_res['Minor']
 
     # Create'MajorMinor' columns in df_parcel
-
     df_parcel['Major'] = df_parcel['Major'].astype(str)
     df_parcel['Minor'] = df_parcel['Minor'].astype(str)
     df_parcel['MajorMinor'] = df_parcel['Major'] + '-' + df_parcel['Minor']
