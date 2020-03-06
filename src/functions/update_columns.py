@@ -1,10 +1,13 @@
 def update_columns(final_df):
     '''
-    <function description>
+    This function takes in the merged dataframe of the King Country datasets, adds
+    some additional analytical columns, drops all unnecessary columns and returns 
+    the updated dataframe for analysis purposes.
     '''
     
-    # Create 'Year' column
-    final_df['year'] = pd.DatetimeIndex(final_df['DocumentDate']).year
+    import pandas as pd
+    import pandasql as ps
+    pd.set_option('max_colwidth', 80)
 
     # Create a lot proportion column
     final_df['SqFtProp'] = final_df['SqFtTotLiving']/final_df['SqFtLot']
@@ -21,7 +24,7 @@ def update_columns(final_df):
                 END as has_waterfront
                 FROM final_df
                 """)
-    final_df['has_waterfront'] = ps.sqldf(qwater)
+    final_df['has_waterfront'] = ps.sqldf(qwater)['has_waterfront']
 
     # create a boolean porch column
     qporch = ("""
@@ -32,20 +35,22 @@ def update_columns(final_df):
                 END AS has_porch
                 FROM final_df
                 """)
-    final_df['has_porch'] = ps.sqldf(qporch)
+    final_df['has_porch'] = ps.sqldf(qporch)['has_porch']
 
     # create a boolean nuisance column
     qn = ("""
                 SELECT SalePrice,
                 CASE
-                    WHEN Other_Nuisance > 0 OR PowerLines > 0 OR Traffic > 0 THEN 1
+                    WHEN OtherNuisances > 0 OR PowerLines > 0 OR TrafficNoise > 0 THEN 1
                     ELSE 0
                 END AS has_nuisance
                 FROM final_df
                 """)
-    final_df['has_nuisance'] = ps.sqldf(qn)
+    final_df['has_nuisance'] = ps.sqldf(qn)['has_nuisance']
 
-    # drop unnecessary columns?
-    #########################
+    # drop unnecessary columns
+    analysis_df = final_df[['SalePrice', 'MajorMinor', 'SqFtProp', 'CostSqFt', 'has_waterfront', \
+                            'has_porch', 'has_nuisance', 'ZipCode', 'year', 'BldgGrade', \
+                            'Condition', 'PropertyType']]
     
     return analysis_df
