@@ -48,9 +48,8 @@ def update_columns(final_df):
                 """)
     final_df['has_nuisance'] = ps.sqldf(qn)['has_nuisance']
 
-    # drop unnecessary columns
-    analysis_df = final_df[['SalePrice', 'MajorMinor', 'SqFtProp', 'CostSqFt', 'has_waterfront', \
-                            'has_porch', 'has_nuisance', 'ZipCode', 'year', 'BldgGrade', \
-                            'Condition', 'PropertyType']]
+    # drop unnecessary columns and NaNs
+    analysis_df = final_df[['SalePrice','ZipCode','SqFtTotLiving']]
+    anaysis_df.dropna(inplace=True)
     
     return analysis_df
